@@ -4,4 +4,8 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('welcome'));
+Route::get('/', fn () => view('index'))->name('index');
+Route::get('/login', fn () => view('auth.login'))->name('login');
+Route::get('/dashboard', fn () => view('auth.index'))->name('dashboard');
+Route::get('/nodes', fn () => view('auth.show'))->name('nodes');
+Route::get('/create-node', fn () => view('auth.create'))->name('create-node');

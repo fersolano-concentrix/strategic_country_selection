@@ -2,6 +2,42 @@
 @import 'tailwindcss';
 @plugin "daisyui";
 
+@plugin "daisyui/theme" {
+  name: "CNXTheme";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0);
+  --color-base-content: oklch(21% 0.006 285.885);
+  --color-primary: #003D5B;
+  --color-primary-content: oklch(93% 0.034 272.788);
+  --color-secondary: #007380;
+  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-accent: #25E2CC;
+  --color-accent-content: oklch(38% 0.063 188.416);
+  --color-neutral: #2A2A2C;
+  --color-neutral-content: oklch(92% 0.004 286.32);
+  --color-info: #25E2CC;
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: #4ade80;
+  --color-success-content: oklch(26% 0.051 172.552);
+  --color-warning: #FF8700;
+  --color-warning-content: oklch(27% 0.077 45.635);
+  --color-error: #CC3262;
+  --color-error-content: oklch(89% 0.058 10.001);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 1rem;
+  --size-selector: 0.21875rem;
+  --size-field: 0.21875rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
