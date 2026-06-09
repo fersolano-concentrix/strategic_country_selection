@@ -47,8 +47,15 @@
                 <p class="text-neutral-500 mt-2 text-sm font-medium">Sign in to access your administrative control panel portal.</p>
             </div>
 
-            <form method="POST" action="#" class="space-y-5">
+            <form method="POST" action="{{ route('login.post') }}" class="space-y-5">
                 @csrf
+
+                @error('email')
+                    <div class="alert alert-error text-sm rounded-xl py-3 shadow-sm mb-4 bg-error/10 text-error border border-error/20">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>{{ $message }}</span>
+                    </div>
+                @enderror
 
                 <div class="form-control w-full">
                     <label for="email" class="label font-bold text-primary text-xs uppercase tracking-wider px-1">
@@ -59,7 +66,7 @@
                             <i class="fa-regular fa-envelope text-lg"></i>
                         </span>
                         <input id="email"
-                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 focus:border-[#25E2CC] focus:ring-2 focus:ring-[#25E2CC]/20 rounded-xl transition-all font-medium text-sm"
+                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 @error('email') border-error focus:border-error focus:ring-error/20 @else focus:border-[#25E2CC] focus:ring-[#25E2CC]/20 @enderror rounded-xl transition-all font-medium text-sm"
                             type="email" name="email" value="{{ old('email') }}" required autofocus
                             placeholder="admin@concentrix.com" />
                     </div>
@@ -74,7 +81,7 @@
                             <i class="fa-solid fa-lock text-lg"></i>
                         </span>
                         <input id="password"
-                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 focus:border-[#25E2CC] focus:ring-2 focus:ring-[#25E2CC]/20 rounded-xl transition-all font-medium text-sm"
+                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 @error('email') border-error focus:border-error focus:ring-error/20 @else focus:border-[#25E2CC] focus:ring-[#25E2CC]/20 @enderror rounded-xl transition-all font-medium text-sm"
                             type="password" name="password" required placeholder="••••••••" />
                     </div>
                 </div>
@@ -94,7 +101,7 @@
             </form>
 
             <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-base-200 pt-6">
-                <a href="#" class="text-xs font-bold text-neutral-400 hover:text-primary flex items-center gap-2 transition-colors group">
+                <a href="{{ route('index') }}" class="text-xs font-bold text-neutral-400 hover:text-primary flex items-center gap-2 transition-colors group">
                     <i class="fa-solid fa-arrow-left transition-transform group-hover:-translate-x-1"></i>
                     Return to Public Portal
                 </a>

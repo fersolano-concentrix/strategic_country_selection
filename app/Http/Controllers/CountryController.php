@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
-use App\Http\Requests\CountryRequest; // Asegúrate de haber creado este Form Request
+use App\Http\Requests\CountryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,7 +19,7 @@ class CountryController extends Controller
     public function create()
     {
         Gate::authorize('create', Country::class);
-        return view('admin.countries.create');
+        return view('auth.create');
     }
 
     public function store(CountryRequest $request)

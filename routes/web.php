@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -11,33 +12,35 @@ use Illuminate\Support\Facades\Route;
 // ==========================================
 Route::get('/', fn () => view('index'))->name('index');
 Route::get('/login', fn () => view('auth.login'))->name('login');
+Route::post('/login', [AuthController::class, 'store'])->name('login.post');
 
 // ==========================================
-// DASHBOARD
+// DASHBOARD ADMIN
 // ==========================================
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', fn () => view('auth.index'))->name('dashboard');
-    
-    // I commented these out as they are likely being replaced by the CountryController.
-    // If you still have hardcoded links pointing to these, you can uncomment them or 
-    // update your links to point to route('admin.countries.index') instead.
-    Route::get('/nodes', fn () => view('auth.show'))->name('nodes');
-    Route::get('/create-node', fn () => view('auth.create'))->name('create-node');
-});
+    Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-// ==========================================
-// ADMIN PANEL (STRATEGIC MATRIX)
-// ==========================================
-/* 
- * This group automatically applies:
- * - URL Prefix: /admin/... (e.g., /admin/countries/create)
- * - Route Name Prefix: admin.* (e.g., route('admin.countries.create'))
- * - Middleware: Must be logged in
- */
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    
-    // Route::resource automatically creates the routes for index, create, store, edit, update, and destroy.
-    // We exclude 'show' since your controller doesn't currently use a dedicated view-only page.
-    Route::resource('countries', CountryController::class)->except(['show']);
-    
+    // Wrapped named group for managing country matrix assets
+    Route::name('admin.')->group(function () {
+        
+        // Form Ingestion Creation Workflows
+        Route::get('/create-node', [CountryController::class, 'create'])->name('countries.create');
+        Route::post('/create-node', [CountryController::class, 'store'])->name('countries.store');
+        
+        // Primary Dashboard Matrix Asset Index
+        // Adding an explicit alias 'nodes' so any route('nodes') requests redirect safely!
+        Route::get('/nodes', [CountryController::class, 'index'])
+            ->name('countries.index');
+            
+        // Individual Resource Updates & Modifiers
+        Route::get('/admin/countries/{country}/edit', [CountryController::class, 'edit'])->name('countries.edit');
+        Route::put('/admin/countries/{country}', [CountryController::class, 'update'])->name('countries.update');
+        Route::delete('/admin/countries/{country}', [CountryController::class, 'destroy'])->name('countries.destroy');
+    });
+
+    // Fallback Alias Group for Legacy/Navigation Links
+    // This catches route('nodes') or route('create-node') safely outside the prefix block
+    Route::get('/nodes', [CountryController::class, 'index'])->name('nodes');
+    Route::get('/create-node', [CountryController::class, 'create'])->name('create-node');
 });
