@@ -1,39 +1,45 @@
 #!/bin/bash
 
-echo "🚀 Iniciando inicialización de la plataforma..."
+echo "🚀 Starting platform initialization..."
 
-# 1. Moverse al directorio del despliegue
+# 1. Navigate to the deployment directory
 cd /home/site/wwwroot
 
-# 2. Instalar dependencias de PHP (Optimizadas para producción)
-echo "📦 Instalando dependencias de Composer..."
+# 2. Install PHP dependencies (Optimized for production)
+echo "📦 Installing Composer dependencies..."
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# 3. Compilar el Frontend (Tailwind CSS + DaisyUI Fantasy Theme)
-if [ -f "package.json" ]; then
-    echo "🎨 Detectado package.json. Compilando activos con Vite..."
-    npm install
-    npm run build
-fi
+# 3. Compile the Frontend (Handled by GitHub Actions - Optional here)
+# Note: Since GitHub Actions builds Vite assets, this step is disabled to speed up deployment.
+# If you ever want the container to compile it instead, uncomment the lines below:
+# if [ -f "package.json" ]; then
+#     echo "🎨 package.json detected. Compiling assets with Vite..."
+#     npm install
+#     npm run build
+# fi
 
-# 4. Configuración Segura de Nginx (Mover tu archivo default si existe)
+# 4. Secure Nginx Configuration (Apply custom routing for Laravel's public directory)
 if [ -f /home/site/wwwroot/default ]; then
-    echo "🌐 Aplicando configuración personalizada de Nginx..."
+    echo "🌐 Applying custom Nginx configuration..."
     cp /home/site/wwwroot/default /etc/nginx/sites-available/default
+    # Ensure the configuration is symlinked to sites-enabled if Azure requires it
+    ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
     service nginx reload || true
 else
-    echo "⚠️ Nota: Usando la configuración por defecto de Nginx de Azure."
+    echo "⚠️ Note: Using Azure's default Nginx configuration."
 fi
 
-# 5. Optimización de Capas de Caché de Laravel
-echo "⚡ Optimizando cachés de Laravel..."
-php artisan optimize:clear
+# 5. Optimize Laravel Cache Layers
+echo "⚡ Optimizing Laravel caches..."
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# 6. Migraciones Estructurales en Azure SQL
-echo "🗄️ Ejecutando migraciones en Azure SQL (strategicengine)..."
+# 6. Structural Migrations on Azure SQL
+echo "🗄️ Running migrations on Azure SQL (strategicengine)..."
 php artisan migrate --force
 
-echo "✅ ¡Lanzamiento completado con éxito!"
+echo "✅ Deployment completed successfully!"
