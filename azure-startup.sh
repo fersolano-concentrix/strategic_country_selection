@@ -9,20 +9,17 @@ cd /home/site/wwwroot
 echo "📦 Installing Composer dependencies..."
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# 3. Compile the Frontend (Handled by GitHub Actions - Optional here)
-# Note: Since GitHub Actions builds Vite assets, this step is disabled to speed up deployment.
-# If you ever want the container to compile it instead, uncomment the lines below:
-# if [ -f "package.json" ]; then
-#     echo "🎨 package.json detected. Compiling assets with Vite..."
-#     npm install
-#     npm run build
-# fi
+# 3. Compile the Frontend (Tailwind CSS + DaisyUI) right inside Azure
+if [ -f "package.json" ]; then
+    echo "🎨 package.json detected. Compiling assets with Vite inside Azure..."
+    npm install
+    npm run build
+fi
 
 # 4. Secure Nginx Configuration (Apply custom routing for Laravel's public directory)
 if [ -f /home/site/wwwroot/default ]; then
     echo "🌐 Applying custom Nginx configuration..."
     cp /home/site/wwwroot/default /etc/nginx/sites-available/default
-    # Ensure the configuration is symlinked to sites-enabled if Azure requires it
     ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
     service nginx reload || true
 else
