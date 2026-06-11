@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
     {
 
         User::create([
-            'name'              => 'System Administrator',
-            'email'             => 'admin@concentrix.com',
+            'name' => 'System Administrator',
+            'email' => 'admin@concentrix.com',
             'email_verified_at' => now(),
-            'password'          => Hash::make('password123'),
-            'is_admin'          => true,
+            'password' => Hash::make('password123'),
+            'is_admin' => true,
         ]);
 
     }

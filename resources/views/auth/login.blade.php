@@ -66,7 +66,7 @@
                             <i class="fa-regular fa-envelope text-lg"></i>
                         </span>
                         <input id="email"
-                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 @error('email') border-error focus:border-error focus:ring-error/20 @else focus:border-[#25E2CC] focus:ring-[#25E2CC]/20 @enderror rounded-xl transition-all font-medium text-sm"
+                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 @error('email') border-error focus:border-error focus:ring-error/20 @else focus:border-accent focus:ring-accent/20 @enderror rounded-xl transition-all font-medium text-sm"
                             type="email" name="email" value="{{ old('email') }}" required autofocus
                             placeholder="admin@concentrix.com" />
                     </div>
@@ -81,7 +81,7 @@
                             <i class="fa-solid fa-lock text-lg"></i>
                         </span>
                         <input id="password"
-                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 @error('email') border-error focus:border-error focus:ring-error/20 @else focus:border-[#25E2CC] focus:ring-[#25E2CC]/20 @enderror rounded-xl transition-all font-medium text-sm"
+                            class="input input-bordered pl-12 pr-4 w-full h-12 bg-base-200/50 focus:bg-base-100 border-base-300 @error('email') border-error focus:border-error focus:ring-error/20 @else focus:border-accent focus:ring-accent/20 @enderror rounded-xl transition-all font-medium text-sm"
                             type="password" name="password" required placeholder="••••••••" />
                     </div>
                 </div>
@@ -101,7 +101,7 @@
             </form>
 
             <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-base-200 pt-6">
-                <a href="{{ route('index') }}" class="text-xs font-bold text-neutral-400 hover:text-primary flex items-center gap-2 transition-colors group">
+                <a href="{{ route('countries.index') }}" class="text-xs font-bold text-neutral-400 hover:text-primary flex items-center gap-2 transition-colors group">
                     <i class="fa-solid fa-arrow-left transition-transform group-hover:-translate-x-1"></i>
                     Return to Public Portal
                 </a>

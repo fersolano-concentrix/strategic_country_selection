@@ -1,5 +1,5 @@
 @props([
-    'title' => 'CNX LATAM Strategic Selection Engine'
+    'title' => 'CNX LATAM Strategic Selection Engine',
 ])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="cnxTheme">
@@ -15,7 +15,7 @@
 
 </head>
 
-<body class="bg-base-300"> 
+<body class="bg-base-300">
     <!-- navbar -->
     <nav class="navbar bg-primary bg-base-100 shadow-sm">
         <div class="navbar-start">
@@ -25,8 +25,8 @@
                 </div>
                 <ul tabindex="-1"
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                    <li><a>Country Profile</a></li>
-                    <li><a>Country Recommender</a></li>
+                    <li><a href="{{ route('countries.index') }}">Country Profile</a></li>
+                    <li><a href="{{ route('countries.recommender') }}">Country Recommender</a></li>
                 </ul>
             </div>
             <a class="px-4 h-auto min-h-12 py-2">
@@ -35,25 +35,33 @@
         </div>
         <div class="navbar-center hidden lg:flex">
             <div class="flex items-center flex-shrink-0 bg-cnxDeepBlue/50 border border-white/10 rounded-lg p-1">
-                <a href="#"
-                    class="btn btn-sm border-none px-3 h-8 min-h-8 {{ request()->routeIs('') ? 'bg-base-100 text-primary hover:bg-white' : 'btn-ghost text-white/80 hover:text-white hover:bg-white/10' }}">
+                <a href="{{ route('countries.index') }}"
+                    class="btn btn-sm border-none px-3 h-8 min-h-8 {{ request()->routeIs('countries.index') ? 'bg-base-100 text-primary hover:bg-white' : 'btn-ghost text-white/80 hover:text-white hover:bg-white/10' }}">
                     Country Profile
                 </a>
-                <a href="#"
-                    class="btn btn-sm border-none px-3 h-8 min-h-8 {{ request()->routeIs('') ? 'bg-base-100 text-primary hover:bg-white' : 'btn-ghost text-white/80 hover:text-white hover:bg-white/10' }}">
+                <a href="{{ route('countries.recommender') }}"
+                    class="btn btn-sm border-none px-3 h-8 min-h-8 {{ request()->routeIs('countries.recommender') ? 'bg-base-100 text-primary hover:bg-white' : 'btn-ghost text-white/80 hover:text-white hover:bg-white/10' }}">
                     Country Recommender
                 </a>
             </div>
         </div>
         <div class="navbar-end">
-    <select
-        class="select select-bordered select-sm w-40 bg-white/10 text-white border-white/20 rounded-lg focus:outline-none focus:ring-1 focus:ring-accent text-sm font-medium cursor-pointer h-8 min-h-8 px-2 pr-7">
-        <option disabled selected class="text-neutral bg-white">Explore country...</option>
-        <option>Costa Rica</option>
-        <option>Colombia</option>
-        <option>Mexico</option>
-    </select>
-</div>
+            <div x-data="{}" class="relative inline-block">
+                <select @change="if($event.target.value) window.location.href = '/countries/' + $event.target.value"
+                    class="select select-bordered select-sm w-40 bg-white/10 text-white border-white/20 rounded-lg focus:outline-none focus:ring-1 focus:ring-accent text-sm font-medium cursor-pointer h-8 min-h-8 px-2 pr-7">
+
+                    <option value="" disabled selected class="text-neutral bg-white">Explore country...</option>
+
+                    {{-- Dynamically loop over your live database records --}}
+                    @foreach ($countries as $countryItem)
+                        <option value="{{ $countryItem->id }}" class="text-neutral bg-white">
+                            {{ $countryItem->country_name }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+        </div>
     </nav>
     <!-- ./navbar -->
     <!-- main -->
@@ -68,14 +76,14 @@
             <span class="hidden sm:inline text-neutral/20">|</span>
 
             @auth
-                <a href="#"
-                    class="text-[#007380] hover:text-[#003D5B] font-bold transition-colors flex items-center gap-1">
+                <a href="{{ route('dashboard') }}"
+                    class="text-secondary hover:text-primary font-bold transition-colors flex items-center gap-1">
                     <i class="fas fa-user-cog"></i>
                     Admin Dashboard
                 </a>
             @else
-                <a href="#"
-                    class="text-neutral/30 hover:text-[#003D5B] transition-colors flex items-center gap-1 group"
+                <a href="{{ route('login') }}"
+                    class="text-neutral/30 hover:text-primary transition-colors flex items-center gap-1 group"
                     title="System Login">
                     <i class="fas fa-user-lock"></i>
                     Admin Access

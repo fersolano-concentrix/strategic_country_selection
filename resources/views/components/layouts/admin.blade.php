@@ -36,10 +36,16 @@
                         </div>
                         <ul tabindex="0"
                             class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow-xl border border-base-200">
-                            <li><a class="justify-between">My Profile</li>
+                            <li><a href="{{ route('profile.password.edit') }}" class="justify-between">My Profile</a></li>
                             <div class="divider my-1"></div>
-                            <li><a class="text-error font-medium"><i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                    Logout</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" class="contents">
+                                    @csrf
+                                    <button type="submit" class="text-error font-medium">
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -61,8 +67,8 @@
 
                     <ul class="space-y-1">
                         <x-nav.items route="dashboard" name="Dashboard" icon="fa-solid fa-chart-pie" />
-                        <x-nav.items route="nodes" name="Strategic Nodes" icon="fa-solid fa-earth-americas" />
-                        <x-nav.items route="create-node" name="Create Node" icon="fa-solid fa-plus" />
+                        <x-nav.items route="pipeline" name="Strategic Nodes" icon="fa-solid fa-earth-americas" />
+                        <x-nav.items route="countries.create" name="Create Node" icon="fa-solid fa-plus" />
                     </ul>
                 </div>
 

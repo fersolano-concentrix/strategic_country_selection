@@ -7,51 +7,64 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-    /**
-     * Handle an incoming authentication request.
-     */
+    public function editPassword()
+    {
+        return view('auth.password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        // Validate structural inbound request fields
+        $request->validate([
+            'current_password' => ['required', 'string'],
+            'password' => ['required', 'string', 'confirmed', Password::min(8)],
+        ]);
+
+        // Verify current security credentials records match active administrative identity token
+        if (! Hash::check($request->current_password, auth()->user()->password)) {
+            return back()->withErrors([
+                'current_password' => 'The current password supplied does not match our records.',
+            ]);
+        }
+
+        auth()->user()->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Security token updated successfully in primary records data node.');
+    }
+
     public function store(Request $request): RedirectResponse
     {
-        // 1. Validate the incoming form data
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        // 2. Attempt to authenticate the user
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            
-            // 3. Prevent session fixation attacks by regenerating the session ID
             $request->session()->regenerate();
 
-            // 4. Redirect to the dashboard (or where they originally tried to go)
             return redirect()->intended(route('dashboard'));
         }
 
-        // 5. If authentication fails, send them back with a secure error message
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'The credentials supplied do not match our records.',
         ])->onlyInput('email');
     }
 
-    /**
-     * Destroy an authenticated session (Logout).
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
-        // 1. Log the user out of the web guard
-        Auth::guard('web')->logout();
+        Auth::logout();
 
-        // 2. Invalidate the current session
         $request->session()->invalidate();
-
-        // 3. Regenerate the CSRF token for security
         $request->session()->regenerateToken();
 
-        // 4. Redirect back to the login page
-        return redirect()->route('login');
+        return redirect()->route('countries.index')
+            ->with('success', 'Administrative session securely disconnected.');
     }
 }
