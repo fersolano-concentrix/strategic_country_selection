@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Country::class, CountryPolicy::class);
 
         View::composer('components.layouts.guest', function ($view) {
-            $view->with('countries', Country::orderBy('country', 'asc')->get());
+            $view->with('countries', Country::orderBy('country_name', 'asc')->get());
         });
     }
 }
