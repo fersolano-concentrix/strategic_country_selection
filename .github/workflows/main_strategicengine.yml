@@ -49,7 +49,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: php-app
-          path: .
+          path: |
+            .
+            !node_modules/
 
   deploy:
     runs-on: ubuntu-latest
