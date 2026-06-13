@@ -30,6 +30,6 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/', [CountryController::class, 'index'])->name('countries.index');
 Route::get('/index', [CountryController::class, 'index'])->name('countries.index');
 Route::get('/recommender', [CountryController::class, 'recommender'])->name('countries.recommender');
-Route::get('/login', fn () => view(Login::class))->name('login');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('login.post');
 Route::get('/countries/{country}', [CountryController::class, 'show'])->name('countries.show');

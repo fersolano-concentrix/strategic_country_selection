@@ -4,8 +4,8 @@
     'scores' => null,
     'metrics' => [],
     'model' => null,
-    'minLabel' => '1 = Scarce',
-    'maxLabel' => '5 = Dominant',
+    'minLabel' => 'Scarce',
+    'maxLabel' => 'Dominant',
 ])
 
 @php

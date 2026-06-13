@@ -60,7 +60,8 @@ class CountryRequest extends FormRequest
             'd1_lang_portuguese' => 'nullable|integer|min:1|max:5',
             'd1_lang_french' => 'nullable|integer|min:1|max:5',
             'd1_lang_italian' => 'nullable|integer|min:1|max:5',
-            'd1_lang_others_specify' => 'nullable|string|max:255',
+            'd1_lang_others_name' => 'nullable|string|max:255',
+            'd1_lang_italian' => 'nullable|integer|min:1|max:5',
 
             'd1_global_ready_na' => 'nullable|integer|min:1|max:5',
             'd1_global_ready_eu' => 'nullable|integer|min:1|max:5',

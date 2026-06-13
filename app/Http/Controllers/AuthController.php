@@ -12,6 +12,12 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+
+        public function login()
+    {
+        return view('auth.login');
+    }
+
     public function editPassword()
     {
         return view('auth.password');

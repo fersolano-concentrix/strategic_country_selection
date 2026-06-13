@@ -9,7 +9,7 @@
                 
                 <div class="flex items-center gap-3 pb-3 border-b border-base-100">
                     <div class="w-10 h-10 rounded-xl bg-secondary/5 text-secondary flex items-center justify-center text-lg shadow-inner">
-                        <i class="fa-solid fa-shield-halved text-[#007380]"></i>
+                        <i class="fa-solid fa-shield-halved text-secondary"></i>
                     </div>
                     <div>
                         <h2 class="text-md font-bold text-primary uppercase tracking-wide">Update Credentials</h2>

@@ -30,11 +30,29 @@ class Country extends Model
     // ==========================================
 
     private const array SCORE_FIELDS = [
-        'd1_high_school', 'd1_technical', 'd1_bachelors', 'd1_postgraduate',
-        'd1_cx_hospitality', 'd1_stem_digital', 'd1_professional_services',
-        'd1_healthcare_sciences', 'd1_business_sales',
-        'd1_lang_spanish', 'd1_lang_english', 'd1_lang_portuguese',
-        'd1_lang_french', 'd1_lang_italian',
+    
+    // ==========================================
+    // D1 | HUMAN CAPITAL
+    // ==========================================
+        'd1_high_school', 
+        'd1_technical', 
+        'd1_bachelors', 
+        'd1_postgraduate',
+
+        'd1_cx_hospitality', 
+        'd1_stem_digital', 
+        'd1_professional_services',
+        'd1_healthcare_sciences', 
+        'd1_business_sales',
+
+        'd1_lang_spanish', 
+        'd1_lang_english', 
+        'd1_lang_portuguese',
+        'd1_lang_french', 
+        'd1_lang_italian',
+        'd1_lang_others_name',
+        'd1_lang_others_specify',
+
         'd1_global_ready_na', 'd1_global_ready_eu', 'd1_global_ready_spain',
         'd1_global_ready_latam', 'd1_global_ready_apac',
         'd2_mnc_presence', 'd2_regulated_industry_maturity',

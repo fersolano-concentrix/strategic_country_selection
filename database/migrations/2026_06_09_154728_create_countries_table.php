@@ -47,7 +47,8 @@ return new class extends Migration
             $table->tinyInteger('d1_lang_portuguese')->nullable();
             $table->tinyInteger('d1_lang_french')->nullable();
             $table->tinyInteger('d1_lang_italian')->nullable();
-            $table->string('d1_lang_others_specify')->nullable();
+            $table->string('d1_lang_others_name')->nullable();
+            $table->tinyInteger('d1_lang_others_specify')->nullable();
 
             // 4. Global Readiness
             $table->tinyInteger('d1_global_ready_na')->nullable();
@@ -62,8 +63,14 @@ return new class extends Migration
             $table->tinyInteger('d2_mnc_presence')->nullable();
             $table->integer('d2_mnc_years')->nullable();
 
+            $table->tinyInteger('d2_bpo_maturity')->nullable();
+            $table->integer('d2_bpo_years')->nullable();
+
+            $table->tinyInteger('d2_tech_development')->nullable();
+            $table->integer('d2_tech_years')->nullable();
+
             $table->tinyInteger('d2_regulated_industry_maturity')->nullable();
-            $table->integer('d2_regulated_years')->nullable(); // *Corregido de tu Blade
+            $table->integer('d2_regulated_years')->nullable();
 
             // ==========================================
             // D3 | OPERATIONAL PROFILE
@@ -86,24 +93,55 @@ return new class extends Migration
             $table->tinyInteger('d3_lang_portuguese_c1')->nullable();
             $table->string('d3_lang_others')->nullable();
 
-            // 3. Technical Support Maturity
+            // 3. Service Complexity Level 
+            $table->tinyInteger('d3_srv_dig_sales')->nullable();
+            $table->tinyInteger('d3_srv_dig_marketing')->nullable();
+            $table->tinyInteger('d3_srv_dig_cs')->nullable();
+            $table->tinyInteger('d3_srv_dig_trust_safety')->nullable();
+            $table->tinyInteger('d3_srv_dig_finance_compliance')->nullable();
+            
+            $table->tinyInteger('d3_srv_tech_transformation')->nullable();
+            $table->tinyInteger('d3_srv_tech_applications')->nullable();
+            $table->tinyInteger('d3_srv_tech_automation')->nullable();
+            $table->tinyInteger('d3_srv_tech_experience_platforms')->nullable();
+            $table->tinyInteger('d3_srv_tech_testing')->nullable();
+            $table->tinyInteger('d3_srv_tech_cx_tech')->nullable();
+            $table->tinyInteger('d3_srv_tech_generative_ai')->nullable();
+            $table->tinyInteger('d3_srv_tech_agentic_ai')->nullable();
+            $table->tinyInteger('d3_srv_tech_cybersecurity')->nullable();
+            
+            $table->tinyInteger('d3_srv_data_transformation')->nullable();
+            $table->tinyInteger('d3_srv_data_engineering')->nullable();
+            $table->tinyInteger('d3_srv_data_advanced_analytics')->nullable();
+            $table->tinyInteger('d3_srv_data_enterprise_intelligence')->nullable();
+            $table->tinyInteger('d3_srv_data_operational_insights')->nullable();
+            $table->tinyInteger('d3_srv_data_voc')->nullable();
+            $table->tinyInteger('d3_srv_data_domain_solutions')->nullable();
+            $table->tinyInteger('d3_srv_data_ai_support')->nullable();
+            
+            $table->tinyInteger('d3_srv_strat_experience_design')->nullable();
+            $table->tinyInteger('d3_srv_strat_digital_innovation')->nullable();
+            $table->tinyInteger('d3_srv_strat_lifecycle_engagement')->nullable();
+            $table->tinyInteger('d3_srv_strat_business_transformation')->nullable();
+
+            // 4. Technical Support Maturity
             $table->tinyInteger('d3_tech_cx')->nullable();
-            $table->tinyInteger('d3_tech_sales')->nullable();
-            $table->tinyInteger('d3_tech_collections')->nullable();
+            $table->integer('d3_tech_cx_years')->nullable();
+            $table->decimal('d3_tech_cx_attrition', 5, 2)->nullable();
+
             $table->tinyInteger('d3_tech_tier1')->nullable();
             $table->tinyInteger('d3_tech_tier2')->nullable();
             $table->tinyInteger('d3_tech_tier3')->nullable();
-            $table->tinyInteger('d3_tech_back_office')->nullable();
-            $table->tinyInteger('d3_tech_consulting')->nullable();
-            $table->integer('d3_tech_years')->nullable();
+            $table->integer('d3_tech_tiers_years')->nullable();
+            $table->decimal('d3_tech_tiers_attrition', 5, 2)->nullable();
 
-            // 4. Retention and Stability (Attrition - Porcentajes)
-            $table->decimal('d3_attrition_cx', 5, 2)->nullable();
-            $table->decimal('d3_attrition_technical', 5, 2)->nullable();
-            $table->decimal('d3_attrition_back_office', 5, 2)->nullable();
-            $table->decimal('d3_attrition_sales', 5, 2)->nullable();
-            $table->decimal('d3_attrition_collections', 5, 2)->nullable();
-            $table->decimal('d3_attrition_consulting', 5, 2)->nullable();
+            $table->tinyInteger('d3_tech_back_office')->nullable();
+            $table->integer('d3_tech_back_office_years')->nullable();
+            $table->decimal('d3_tech_back_office_attrition', 5, 2)->nullable();
+            
+            $table->tinyInteger('d3_tech_consulting')->nullable();
+            $table->integer('d3_tech_consulting_years')->nullable();
+            $table->decimal('d3_tech_consulting_attrition', 5, 2)->nullable();
 
             // 5. Supported Markets (Checkboxes -> Boolean)
             $table->boolean('d3_market_north_america')->default(false);
@@ -111,9 +149,11 @@ return new class extends Migration
             $table->boolean('d3_market_latam')->default(false);
             $table->boolean('d3_market_apac')->default(false);
             $table->boolean('d3_market_local')->default(false);
-            $table->integer('d3_market_years')->nullable(); // *Corregido de tu Blade
 
-            // 6. Industry Experience Matrix (Checkboxes -> Boolean)
+            // 6. Years of experience
+            $table->integer('d3_market_years')->nullable();
+
+            // 7. Industry Experience Matrix (Checkboxes -> Boolean)
             $table->boolean('d3_vertical_automotive')->default(false);
             $table->boolean('d3_vertical_bfsi')->default(false);
             $table->boolean('d3_vertical_energy')->default(false);
@@ -124,7 +164,7 @@ return new class extends Migration
             $table->boolean('d3_vertical_tech')->default(false);
             $table->boolean('d3_vertical_travel')->default(false);
 
-            // 7. Industries: Years of Experience
+            // 8. Industries: Years of Experience
             $table->integer('d3_exp_years_automotive')->nullable();
             $table->integer('d3_exp_years_bfsi')->nullable();
             $table->integer('d3_exp_years_energy')->nullable();
@@ -135,12 +175,10 @@ return new class extends Migration
             $table->integer('d3_exp_years_tech')->nullable();
             $table->integer('d3_exp_years_travel')->nullable();
 
-            // 8. Infrastructure
+            // 9. Infrastructure
             $table->string('d3_total_installed_capacity')->nullable();
             $table->string('d3_growth_availability')->nullable();
-            $table->string('d3_sites_count')->nullable();
-            $table->string('d3_site_locations')->nullable();
-
+            
             // ==========================================
             // D4 | COUNTRY RISK PROFILE
             // ==========================================

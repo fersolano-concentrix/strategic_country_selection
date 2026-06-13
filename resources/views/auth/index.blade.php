@@ -31,7 +31,7 @@
 
     {{-- Hero --}}
     <x-cards.hero
-        title="Welcome, Admin"
+        title="Welcome, {{ auth()->user()->name }}!"
         subtitle="Strategic Selection Engine admin panel will provide you with comprehensive oversight and control over all strategic nodes." />
 
     {{-- Stats cards --}}

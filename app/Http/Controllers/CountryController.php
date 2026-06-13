@@ -145,7 +145,7 @@ class CountryController extends Controller
 
     public function dashboard()
     {
-        $countries = Country::orderBy('country')->get();
+        $countries = Country::orderBy('country_name')->get();
 
         return view('auth.index', ['countries' => $countries]);
     }
